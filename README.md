@@ -59,11 +59,10 @@ You can choose to use FlowSharp in two modes:
 
 ## Installation
 
-Clone the repository, add a reference to `FlowSharp.Core`, or create a NuGet package:
+Clone the repository, add a reference to `FlowSharp`, or create a NuGet package:
 
 ```bash
-dotnet pack src/FlowSharp/FlowSharp.Core.csproj -c Release
-dotnet nuget push bin/Release/FlowSharp.<version>.nupkg --api-key YOUR_KEY --source https://api.nuget.org/v3/index.json
+dotnet add package FlowSharp --version 1.0.0
 ```
 
 ---
