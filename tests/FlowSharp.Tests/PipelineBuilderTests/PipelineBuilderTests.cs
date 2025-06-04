@@ -73,7 +73,7 @@ public class PipelineBuilderTests
 
         // 5. Execute the pipeline with an initial input string:
         var input = "Hello";
-        var output = await pipeline(input, CancellationToken.None);
+        var output = await pipeline.Invoke(input, CancellationToken.None);
 
         // 6. Assert that both middleware ran in order:
         //
