@@ -2,7 +2,7 @@
 
 A lightweight, in-place pipeline framework for .NET 8 and later. FlowSharp provides both:
 
-1. A **static helper** (`PipelineBuilder.ExecuteAsync`) for building and running middleware pipelines without any dependency‐injection (DI) container.
+1. A **static helper** (`PipelineBuilder.RunAsync`) for building and running middleware pipelines without any dependency‐injection (DI) container.
 2. A **DI‐friendly implementation** (`IPipelineBuilder<TContext, TResult>` → `PipelineBuilder<TContext, TResult>`) that can be registered in an `IServiceCollection` and used in ASP.NET Core or any other DI‐enabled host.
 
 ---
