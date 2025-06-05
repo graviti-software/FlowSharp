@@ -33,8 +33,8 @@ FlowSharp is a minimal, open‐generic “pipeline” framework inspired by clas
 
 You can choose to use FlowSharp in two modes:
 
-1. **Static mode** (no DI required): call `PipelineBuilder.ExecuteAsync<TContext, TResult>(...)` directly anywhere.
-2. **DI mode** (with DI container): register the open‐generic `IPipelineBuilder<,>` → `PipelineBuilder<,>` mapping, then resolve `IPipelineBuilder<MyContext, MyResult>` from your container, call `Use(...)` for each middleware, and finally call `ExecuteAsync(context, ct)`.
+1. **Static mode** (no DI required): call `PipelineBuilder.RunAsync<TContext, TResult>(...)` directly anywhere.
+2. **DI mode** (with DI container): register the open‐generic `IPipelineBuilder<,>` → `PipelineBuilder<,>` mapping, then resolve `IPipelineBuilder<MyContext, MyResult>` from your container, call `Use(...)` for each middleware, and finally call `Build()`.
 
 ---
 
