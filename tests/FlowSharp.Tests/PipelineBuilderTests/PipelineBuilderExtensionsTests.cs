@@ -280,10 +280,10 @@ public class PipelineBuilderExtensionsTests
     public void UseWhen_NullBuilder_ThrowsArgumentNullException()
     {
         // Arrange
-        IPipelineBuilder<string, string> builder = null!;
+        IPipelineBuilder<string, string> nullBuilder = null!;
 
         // Act
-        Action act = () => builder.UseWhen(() => true, (ctx, next, ct) => Task.FromResult(""));
+        Action act = () => nullBuilder.UseWhen(() => true, (ctx, next, ct) => Task.FromResult(""));
 
         // Assert
         act.Should().Throw<ArgumentNullException>().WithParameterName("builder");
@@ -358,10 +358,10 @@ public class PipelineBuilderExtensionsTests
     public void UseExceptionHandler_NullBuilder_ThrowsArgumentNullException()
     {
         // Arrange
-        IPipelineBuilder<string, string> builder = null!;
+        IPipelineBuilder<string, string> nullBuilder = null!;
 
         // Act
-        Action act = () => builder.UseExceptionHandler((ctx, ex, ct) => Task.FromResult(""));
+        Action act = () => nullBuilder.UseExceptionHandler((ctx, ex, ct) => Task.FromResult(""));
 
         // Assert
         act.Should().Throw<ArgumentNullException>().WithParameterName("builder");
@@ -384,10 +384,10 @@ public class PipelineBuilderExtensionsTests
     public void UseAroundInvoke_NullBuilder_ThrowsArgumentNullException()
     {
         // Arrange
-        IPipelineBuilder<string, string> builder = null!;
+        IPipelineBuilder<string, string> nullBuilder = null!;
 
         // Act
-        Action act = () => builder.UseAroundInvoke();
+        Action act = () => nullBuilder.UseAroundInvoke();
 
         // Assert
         act.Should().Throw<ArgumentNullException>().WithParameterName("builder");
