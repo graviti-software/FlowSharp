@@ -46,6 +46,10 @@ You can choose to use FlowSharp in two modes:
 - **Thread-safe building**: once you begin execution, no further middleware can be registered.  
 - **Seamless “root action” wiring**: you specify your terminal handler (the final `TResult` producer) as part of your pipeline.  
 - **Easy unit‐testing**: no container or special host is required; you can build a pipeline and immediately invoke it.
+- **Conditional middleware**: Use `UseWhen()` and `UseWhenRuntime()` for build-time and runtime conditional execution.
+- **Pipeline branching**: Use `MapWhen()` to create branching workflows based on context state.
+- **Exception handling**: Built-in `UseExceptionHandler()` for centralized error handling.
+- **Around-invoke patterns**: Use `UseAroundInvoke()` for cross-cutting concerns like logging and timing.
 
 ---
 
@@ -88,6 +92,73 @@ MyResult result = await flow.Invoke(context, ct);
 
 ---
 
+## Advanced Features
+
+### Conditional Middleware
+
+Execute middleware based on build-time or runtime conditions:
+
+```csharp
+// Build-time conditional (evaluated once during pipeline construction)
+builder.UseWhen(
+    () => Environment.GetEnvironmentVariable("DEBUG") == "true",
+    (context, next, ct) => {
+        Console.WriteLine($"Debug: {context}");
+        return next(context, ct);
+    }
+);
+
+// Runtime conditional (evaluated for each invocation)
+builder.UseWhenRuntime(
+    context => context.IsAuthenticated,
+    (context, next, ct) => {
+        // Only execute for authenticated contexts
+        return next(context, ct);
+    }
+);
+```
+
+### Pipeline Branching
+
+Create conditional branches in your pipeline:
+
+```csharp
+builder.MapWhen(
+    context => context.UserRole == "Admin",
+    adminBranch => {
+        adminBranch.Use((ctx, next, ct) => {
+            // Admin-specific middleware
+            ctx.AddAdminPermissions();
+            return next(ctx, ct);
+        });
+    }
+);
+```
+
+### Exception Handling
+
+Add centralized error handling to your pipeline:
+
+```csharp
+builder.UseExceptionHandler((context, exception, ct) => {
+    Console.Error.WriteLine($"Pipeline error: {exception.Message}");
+    return Task.FromResult(GetDefaultResult());
+});
+```
+
+### Cross-Cutting Concerns
+
+Implement logging, timing, or other cross-cutting concerns:
+
+```csharp
+builder.UseAroundInvoke(
+    before: context => Console.WriteLine($"Starting: {context}"),
+    after: (context, result) => Console.WriteLine($"Completed: {result}")
+);
+```
+
+---
+
 ## Project Structure
 
 ```
@@ -98,6 +169,7 @@ MyResult result = await flow.Invoke(context, ct);
       ├── IMiddleware.cs
       ├── PipelineDelegate.cs
       ├── PipelineBuilder.cs
+      ├── PipelineBuilderExtensions.cs
 
 /tests
   └── FlowSharp.Tests
