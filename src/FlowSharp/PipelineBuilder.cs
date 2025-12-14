@@ -15,7 +15,7 @@
 /// </summary>
 /// <typeparam name="TContext">The type of the context object passed through the pipeline.</typeparam>
 /// <typeparam name="TResult">The type of the result produced by the pipeline.</typeparam>
-internal class PipelineBuilder<TContext, TResult> : IPipelineBuilder<TContext, TResult>
+public class PipelineBuilder<TContext, TResult> : IPipelineBuilder<TContext, TResult>
 {
     // Each component maps an “inner” delegate to an “outer” delegate.
     private readonly IList<Func<PipelineDelegate<TContext, TResult>, PipelineDelegate<TContext, TResult>>> _components
